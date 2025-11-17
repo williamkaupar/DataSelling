@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data seling - Sell Your Mobile Data</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #fff;
+            min-height: 100vh;
+            padding: 10px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 1000;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fdbb2d, #b21f1f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .tagline {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        h2 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            color: #fdbb2d;
+        }
+        
+        .youtube-card {
+            text-align: center;
+            background: rgba(255, 0, 0, 0.2);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+        }
+        
+        .channel-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .channel-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #333;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .channel-details {
+            text-align: left;
+        }
+        
+        .channel-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .channel-subscribers {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, #fdbb2d, #b21f1f);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            flex: 1;
+            margin: 0 5px;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fdbb2d;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .selling-status {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .status-on {
+            background: #4CAF50;
+            box-shadow: 0 0 10px #4CAF50;
+        }
+        
+        .status-off {
+            background: #f44336;
+        }
+        
+        .progress-container {
+            margin: 25px 0;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, #fdbb2d, #b21f1f);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .withdrawal-info {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .rate-info {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        .data-warning {
+            text-align: center;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            color: #ff9800;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">DataSelling</div>
+            <div class="tagline">Sell your mobile data and earn money</div>
+        </header>
+        
+        <!-- Subscription Screen -->
+        <div id="subscription-screen" class="screen active">
+            <div class="card youtube-card">
+                <h2>Subscribe to Continue</h2>
+                <p>To start earning with DataSelling, you must subscribe to our YouTube channel first.</p>
+                
+                <div class="channel-info">
+                    <div class="channel-avatar">W</div>
+                    <div class="channel-details">
+                        <div class="channel-name">@williamkaupar</div>
+                        <div class="channel-subscribers">125K subscribers</div>
+                    </div>
+                </div>
+                
+                <button id="open-youtube" class="btn btn-primary">Open YouTube Channel</button>
+                <button id="subscribed-btn" class="btn btn-secondary" disabled>I Have Subscribed</button>
+                
+                <div class="data-warning">
+                    Note: This is a simulation app. No real data is sold.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Dashboard -->
+        <div id="dashboard-screen" class="screen">
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="data-sold">0 MB</div>
+                    <div class="stat-label">Data Sold</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="balance">₹ 0</div>
+                    <div class="stat-label">Balance</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Sell Your Data</h2>
+                
+                <div class="selling-status">
+                    <span class="status-indicator status-off" id="status-indicator"></span>
+                    <span id="status-text">Data Selling: OFF</span>
+                </div>
+                
+                <div class="rate-info">
+                    Selling Rate: 60 MB per minute | 100 MB = ₹10
+                </div>
+                
+                <button id="toggle-selling" class="btn btn-secondary">Start Selling Data</button>
+                
+                <div class="data-warning" id="network-warning" style="display: none;">
+                    Please turn on Mobile Data or Wi-Fi to start selling.
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" id="selling-progress"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span>0 MB</span>
+                        <span id="progress-target">100 MB</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Withdraw Earnings</h2>
+                
+                <div class="withdrawal-info">
+                    Minimum withdrawal: <strong>₹1000</strong><br>
+                    <span id="withdrawal-status">Keep selling! You need ₹1000 more to withdraw.</span>
+                </div>
+                
+                <button id="withdraw-btn" class="btn btn-primary" disabled>Request Withdrawal</button>
+            </div>
+            
+            <div class="card">
+                <h2>Our YouTube Channel</h2>
+                <p>Don't forget to watch our latest videos!</p>
+                <button id="open-youtube-2" class="btn btn-secondary">Open YouTube Channel</button>
+            </div>
+        </div>
+        
+        <!-- Processing Screen -->
+        <div id="processing-screen" class="screen">
+            <div class="card" style="text-align: center;">
+                <h2>Processing Withdrawal</h2>
+                
+                <div style="margin: 30px 0;">
+                    <div class="stat-value" id="withdrawal-amount">₹ 0</div>
+                    <div class="stat-label">Withdrawal Amount</div>
+                </div>
+                
+                <div id="processing-steps">
+                    <p>✓ Verifying account...</p>
+                    <p>✓ Processing your request...</p>
+                    <p>⏳ Contacting payment gateway...</p>
+                    <p>⏳ Transferring funds...</p>
+                </div>
+                
+                <button id="done-btn" class="btn btn-primary" style="display: none;">Done</button>
+            </div>
+        </div>
+        
+        <footer>
+            DataSelling &copy; 2023 | This is a simulation app for entertainment purposes only.
+        </footer>
+    </div>
+    
+    <div class="notification" id="notification"></div>
+    
+    <script>
+        // App state
+        const state = {
+            subscribed: false,
+            dataSold: 0, // in MB
+            balance: 0,
+            isSelling: false,
+            sellingInterval: null,
+            networkConnected: true
+        };
+        
+        // DOM elements
+        const subscriptionScreen = document.getElementById('subscription-screen');
+        const dashboardScreen = document.getElementById('dashboard-screen');
+        const processingScreen = document.getElementById('processing-screen');
+        
+        const subscribedBtn = document.getElementById('subscribed-btn');
+        const openYoutubeBtn = document.getElementById('open-youtube');
+        const openYoutubeBtn2 = document.getElementById('open-youtube-2');
+        const toggleSellingBtn = document.getElementById('toggle-selling');
+        const withdrawBtn = document.getElementById('withdraw-btn');
+        const doneBtn = document.getElementById('done-btn');
+        
+        const dataSoldElement = document.getElementById('data-sold');
+        const balanceElement = document.getElementById('balance');
+        const statusIndicator = document.getElementById('status-indicator');
+        const statusText = document.getElementById('status-text');
+        const sellingProgress = document.getElementById('selling-progress');
+        const progressTarget = document.getElementById('progress-target');
+        const withdrawalStatus = document.getElementById('withdrawal-status');
+        const networkWarning = document.getElementById('network-warning');
+        const notification = document.getElementById('notification');
+        const withdrawalAmount = document.getElementById('withdrawal-amount');
+        const processingSteps = document.getElementById('processing-steps');
+        
+        // YouTube channel URL
+        const youtubeChannelUrl = "https://youtube.com/@williamkaupar";
+        
+        // Initialize the app
+        function initApp() {
+            // Load saved data from localStorage
+            const savedData = localStorage.getItem('dataSelling_data');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                state.dataSold = data.dataSold || 0;
+                state.balance = data.balance || 0;
+                state.subscribed = data.subscribed || false;
+                
+                if (state.subscribed) {
+                    showScreen(dashboardScreen);
+                    updateUI();
+                }
+            }
+            
+            // Set up event listeners
+            openYoutubeBtn.addEventListener('click', openYouTubeChannel);
+            openYoutubeBtn2.addEventListener('click', openYouTubeChannel);
+            
+            subscribedBtn.addEventListener('click', function() {
+                state.subscribed = true;
+                saveData();
+                showScreen(dashboardScreen);
+                showNotification("Thank you for subscribing!");
+            });
+            
+            // Enable the "I Have Subscribed" button after 10 seconds
+            setTimeout(() => {
+                subscribedBtn.disabled = false;
+            }, 10000);
+            
+            toggleSellingBtn.addEventListener('click', toggleSelling);
+            withdrawBtn.addEventListener('click', processWithdrawal);
+            doneBtn.addEventListener('click', function() {
+                showScreen(dashboardScreen);
+            });
+            
+            // Simulate network connectivity check
+            checkNetworkStatus();
+            setInterval(checkNetworkStatus, 5000);
+        }
+        
+        // Show a specific screen
+        function showScreen(screen) {
+            subscriptionScreen.classList.remove('active');
+            dashboardScreen.classList.remove('active');
+            processingScreen.classList.remove('active');
+            
+            screen.classList.add('active');
+        }
+        
+        // Open YouTube channel
+        function openYouTubeChannel() {
+            window.open(youtubeChannelUrl, '_blank');
+        }
+        
+        // Toggle data selling
+        function toggleSelling() {
+            if (!state.networkConnected) {
+                showNotification("Please connect to the internet to start selling data.");
+                return;
+            }
+            
+            state.isSelling = !state.isSelling;
+            
+            if (state.isSelling) {
+                // Start selling
+                statusIndicator.classList.remove('status-off');
+                statusIndicator.classList.add('status-on');
+                statusText.textContent = "Data Selling: ON";
+                toggleSellingBtn.textContent = "Stop Selling Data";
+                toggleSellingBtn.classList.remove('btn-secondary');
+                toggleSellingBtn.classList.add('btn-primary');
+                
+                // Simulate data selling (60 MB per minute = 1 MB per second)
+                state.sellingInterval = setInterval(() => {
+                    state.dataSold += 1;
+                    state.balance = Math.floor(state.dataSold / 100) * 10;
+                    saveData();
+                    updateUI();
+                }, 1000);
+                
+                showNotification("Data selling started at 60 MB/minute");
+            } else {
+                // Stop selling
+                statusIndicator.classList.remove('status-on');
+                statusIndicator.classList.add('status-off');
+                statusText.textContent = "Data Selling: OFF";
+                toggleSellingBtn.textContent = "Start Selling Data";
+                toggleSellingBtn.classList.remove('btn-primary');
+                toggleSellingBtn.classList.add('btn-secondary');
+                
+                clearInterval(state.sellingInterval);
+                showNotification("Data selling stopped");
+            }
+        }
+        
+        // Process withdrawal
+        function processWithdrawal() {
+            if (state.balance < 1000) {
+                showNotification("You need at least ₹1000 to withdraw.");
+                return;
+            }
+            
+            showScreen(processingScreen);
+            withdrawalAmount.textContent = `₹ ${state.balance}`;
+            
+            // Simulate processing steps
+            setTimeout(() => {
+                processingSteps.innerHTML = `
+                    <p>✓ Verifying account...</p>
+                    <p>✓ Processing your request...</p>
+                    <p>✓ Contacting payment gateway...</p>
+                    <p>⏳ Transferring funds...</p>
+                `;
+            }, 2000);
+            
+            setTimeout(() => {
+                processingSteps.innerHTML = `
+                    <p>✓ Verifying account...</p>
+                    <p>✓ Processing your request...</p>
+                    <p>✓ Contacting payment gateway...</p>
+                    <p>✓ Transferring funds...</p>
+                `;
+                
+                // Reset balance and show success
+                state.balance = 0;
+                saveData();
+                
+                setTimeout(() => {
+                    doneBtn.style.display = 'block';
+                    showNotification("Withdrawal successful! ₹" + state.balance + " has been transferred.");
+                }, 1000);
+            }, 4000);
+        }
+        
+        // Update UI elements
+        function updateUI() {
+            dataSoldElement.textContent = state.dataSold + " MB";
+            balanceElement.textContent = "₹ " + state.balance;
+            
+            // Update progress bar
+            const progressPercent = (state.dataSold % 100);
+            sellingProgress.style.width = progressPercent + "%";
+            progressTarget.textContent = (Math.floor(state.dataSold / 100) + 1) * 100 + " MB";
+            
+            // Update withdrawal button state
+            if (state.balance >= 1000) {
+                withdrawBtn.disabled = false;
+                withdrawalStatus.innerHTML = "You can withdraw <strong>₹" + state.balance + "</strong>";
+            } else {
+                withdrawBtn.disabled = true;
+                const needed = 1000 - state.balance;
+                withdrawalStatus.innerHTML = "Keep selling! You need <strong>₹" + needed + "</strong> more to withdraw.";
+            }
+        }
+        
+        // Check network status
+        function checkNetworkStatus() {
+            // In a real app, this would check actual network connectivity
+            // For simulation, we'll randomly set network status
+            state.networkConnected = Math.random() > 0.1; // 90% chance of being connected
+            
+            if (!state.networkConnected) {
+                networkWarning.style.display = 'block';
+                
+                if (state.isSelling) {
+                    toggleSelling(); // Automatically stop selling if network is lost
+                }
+            } else {
+                networkWarning.style.display = 'none';
+            }
+        }
+        
+        // Save data to localStorage
+        function saveData() {
+            const data = {
+                dataSold: state.dataSold,
+                balance: state.balance,
+                subscribed: state.subscribed
+            };
+            localStorage.setItem('dataSelling_data', JSON.stringify(data));
+        }
+        
+        // Show notification
+        function showNotification(message) {
+            notification.textContent = message;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Initialize the app when the page loads
+        window.addEventListener('load', initApp);
+    </script>
+</body>
+</html>
